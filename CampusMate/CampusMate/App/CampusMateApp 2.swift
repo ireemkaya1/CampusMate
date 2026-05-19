@@ -1,3 +1,11 @@
+//
+//  CampusMateApp 2.swift
+//  CampusMate
+//
+//  Created by ASUS on 28.04.2026.
+//
+
+
 import SwiftUI
 
 @main
@@ -10,6 +18,9 @@ struct CampusMateApp: App {
             SplashView()
                 .environmentObject(eventListVM)
                 .environmentObject(favoritesVM)
+                .onAppear {
+                    NotificationManager.shared.requestPermission()
+                }
         }
     }
 }

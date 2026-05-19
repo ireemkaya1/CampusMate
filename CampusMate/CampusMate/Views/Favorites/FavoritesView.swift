@@ -41,11 +41,7 @@ struct FavoritesView: View {
             }
         }
         .navigationTitle("Favoriler")
-        .toolbar {
-            if !favoriteEvents.isEmpty {
-                EditButton()
-            }
-        }
+        
     }
 }
 

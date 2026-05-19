@@ -1,4 +1,5 @@
 import Foundation
+import Combine
 
 final class EventListViewModel: ObservableObject {
     @Published var events: [Event] = Event.samples
@@ -7,7 +8,6 @@ final class EventListViewModel: ObservableObject {
     private let service = EventService()
 
     func fetchEvents() async {
-        // TODO: Gerçek API çağrısı ile değiştir
         isLoading = true
         events = await service.fetchEvents()
         isLoading = false

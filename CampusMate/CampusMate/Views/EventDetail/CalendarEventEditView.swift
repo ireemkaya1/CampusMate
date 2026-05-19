@@ -1,48 +1,48 @@
-import Foundation
-import Combine
+import SwiftUI
+import EventKit
+import EventKitUI
 
-final class EventDetailViewModel: ObservableObject {
+struct CalendarEventEditView: UIViewControllerRepresentable {
     let event: Event
-    @Published var isNotificationScheduled = false
     
-    init(event: Event) {
-        self.event = event
-    }
+    private let eventStore = EKEventStore()
     
-    func toggleNotification() {
-        if isNotificationScheduled {
-            NotificationManager.shared.cancelEventDateReminders(eventId: event.id)
-            isNotificationScheduled = false
-            print("Etkinlik hatırlatması iptal edildi.")
-            
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                NotificationManager.shared.printPendingNotifications()
-            }
-        } else {
-            guard let eventDate = parseEventDate(from: event.date) else {
-                print("Etkinlik tarihi okunamadı: \(event.date)")
-                return
-            }
-            
-            NotificationManager.shared.scheduleEventDateReminders(
-                eventId: event.id,
-                eventTitle: event.title,
-                eventDate: eventDate
-            )
-            
-            isNotificationScheduled = true
-            print("Etkinlik hatırlatması planlandı.")
-            print("Etkinlik tarihi: \(eventDate)")
-            print("Hatırlatma: 1 gün önce ve 1 saat önce")
-            
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                NotificationManager.shared.printPendingNotifications()
-            }
+    func makeUIViewController(context: Context) -> EKEventEditViewController {
+        let viewController = EKEventEditViewController()
+        viewController.eventStore = eventStore
+        viewController.editViewDelegate = context.coordinator
+        
+        let calendarEvent = EKEvent(eventStore: eventStore)
+        calendarEvent.title = event.title
+        calendarEvent.location = event.location
+        calendarEvent.notes = event.description
+        
+        let startDate = parseEventDate(from: event.date) ?? Date().addingTimeInterval(3600)
+        calendarEvent.startDate = startDate
+        calendarEvent.endDate = startDate.addingTimeInterval(2 * 60 * 60)
+        
+        if let defaultCalendar = eventStore.defaultCalendarForNewEvents {
+            calendarEvent.calendar = defaultCalendar
         }
+        
+        viewController.event = calendarEvent
+        
+        return viewController
     }
     
-    func sendTestNotification() {
-        NotificationManager.shared.scheduleTestReminder(eventTitle: event.title)
+    func updateUIViewController(_ uiViewController: EKEventEditViewController, context: Context) { }
+    
+    func makeCoordinator() -> Coordinator {
+        Coordinator()
+    }
+    
+    final class Coordinator: NSObject, EKEventEditViewDelegate {
+        func eventEditViewController(
+            _ controller: EKEventEditViewController,
+            didCompleteWith action: EKEventEditViewAction
+        ) {
+            controller.dismiss(animated: true)
+        }
     }
     
     private func parseEventDate(from text: String) -> Date? {

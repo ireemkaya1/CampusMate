@@ -1,10 +1,20 @@
 import Foundation
+import Combine
 
 final class FavoritesViewModel: ObservableObject {
-    @Published var favoriteIDs: Set<String> = []
+    private let favoritesKey = "campusmate.favoriteIDs"
+
+    @Published var favoriteIDs: Set<String> = [] {
+        didSet {
+            saveFavorites()
+        }
+    }
+
+    init() {
+        loadFavorites()
+    }
 
     func toggle(_ event: Event) {
-        // TODO: UserDefaults ile kalıcı depolama ekle
         if favoriteIDs.contains(event.id) {
             favoriteIDs.remove(event.id)
         } else {
@@ -17,7 +27,17 @@ final class FavoritesViewModel: ObservableObject {
     }
 
     func clearAll() {
-        // TODO: UserDefaults temizleme ekle
         favoriteIDs.removeAll()
     }
+
+    private func saveFavorites() {
+        let array = Array(favoriteIDs)
+        UserDefaults.standard.set(array, forKey: favoritesKey)
+    }
+
+    private func loadFavorites() {
+        let savedArray = UserDefaults.standard.stringArray(forKey: favoritesKey) ?? []
+        favoriteIDs = Set(savedArray)
+    }
+    
 }

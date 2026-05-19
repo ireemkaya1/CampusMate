@@ -40,7 +40,6 @@ CampusMate ile kullanıcılar:
 
 ## 🖼️ Ekran Görüntüleri
 
-## 🖼️ Ekran Görüntüleri
 
 | Splash | Ana Sayfa |
 |---|---|

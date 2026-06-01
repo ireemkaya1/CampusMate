@@ -1,10 +1,3 @@
-//
-//  CampusMateApp 2.swift
-//  CampusMate
-//
-//  Created by ASUS on 28.04.2026.
-//
-
 
 import SwiftUI
 

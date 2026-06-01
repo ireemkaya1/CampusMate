@@ -1,4 +1,3 @@
-
 import SwiftUI
 
 struct SettingsView: View {
@@ -24,24 +23,28 @@ struct SettingsView: View {
                 .onChange(of: notificationsEnabled) { _, newValue in
                     if newValue {
                         NotificationManager.shared.requestPermission()
-                        showFeedback("Bildirim izni kontrol edildi.")
+                        NotificationManager.shared.scheduleDailyCampusReminders()
+                        showFeedback("Günlük bildirimler 15:00 ve 16:00 için açıldı.")
                     } else {
-                        NotificationManager.shared.cancelAllCampusMateNotifications()
-                        showFeedback("Bildirimler kapatıldı.")
+                        NotificationManager.shared.cancelDailyCampusReminders()
+                        showFeedback("Günlük bildirimler kapatıldı.")
                     }
                 }
             }
             
-            // Push bildirimi simülasyonu
+            // Local bildirim testleri
             Section("Bildirim Kontrolleri") {
+                
                 Button {
-                    NotificationManager.shared.scheduleMockPushNotification(intervalMinutes: 60)
+                    NotificationManager.shared.requestPermission()
+                    NotificationManager.shared.scheduleDailyCampusReminders()
                     NotificationManager.shared.printPendingNotifications()
-                    showFeedback("Saatlik etkinlik bildirimi başlatıldı.")
+                    notificationsEnabled = true
+                    showFeedback("Günlük bildirimler 15:00 ve 16:00 için başlatıldı.")
                 } label: {
                     SettingsActionRow(
                         icon: "clock",
-                        title: "Saatlik Bildirim Başlat",
+                        title: "Günlük Bildirimleri Başlat",
                         color: .blue
                     )
                 }
@@ -74,8 +77,8 @@ struct SettingsView: View {
                 
                 Button(role: .destructive) {
                     NotificationManager.shared.cancelMockPushNotification()
-                    NotificationManager.shared.cancelAllCampusMateNotifications()
-                    NotificationManager.shared.printPendingNotifications()
+                    NotificationManager.shared.clearAllCampusMateNotifications()
+                    notificationsEnabled = false
                     showFeedback("Tüm bildirimler durduruldu.")
                 } label: {
                     SettingsActionRow(
@@ -116,6 +119,7 @@ struct SettingsView: View {
                             .foregroundStyle(.secondary)
                     }
                 }
+                
                 Button(role: .destructive) {
                     showClearConfirmation = true
                 } label: {

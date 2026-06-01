@@ -40,22 +40,40 @@ CampusMate ile kullanıcılar:
 
 ## 🖼️ Ekran Görüntüleri
 
+<table>
+  <tr>
+    <th>Splash</th>
+    <th>Ana Sayfa</th>
+    <th>Harita</th>
+  </tr>
+  <tr>
+    <td><img src="Screenshots/01-splash.jpeg" width="220"/></td>
+    <td><img src="Screenshots/02-home.jpeg" width="220"/></td>
+    <td><img src="Screenshots/03-map.jpeg" width="220"/></td>
+  </tr>
 
-| Splash | Ana Sayfa |
-|---|---|
-| <img src="Screenshots/01-splash.jpeg" width="220"/> | <img src="Screenshots/02-home.jpeg" width="220"/> |
+  <tr>
+    <th>Favoriler</th>
+    <th>Ayarlar</th>
+    <th>Etkinlik Detay</th>
+  </tr>
+  <tr>
+    <td><img src="Screenshots/04-favorites.jpeg" width="220"/></td>
+    <td><img src="Screenshots/05-settings.jpeg" width="220"/></td>
+    <td><img src="Screenshots/06-event-detail.jpeg" width="220"/></td>
+  </tr>
 
-| Harita | Favoriler |
-|---|---|
-| <img src="Screenshots/03-map.jpeg" width="220"/> | <img src="Screenshots/04-favorites.jpeg" width="220"/> |
-
-| Ayarlar | Etkinlik Detay |
-|---|---|
-| <img src="Screenshots/05-settings.jpeg" width="220"/> | <img src="Screenshots/06-event-detail.jpeg" width="220"/> |
-
-| Takvime Ekleme | Apple Maps Yol Tarifi |
-|---|---|
-| <img src="Screenshots/07-calendar.jpeg" width="220"/> | <img src="Screenshots/08-directions.jpeg" width="220"/> |
+  <tr>
+    <th>Takvime Ekle</th>
+    <th>Apple Maps Yol Tarifi</th>
+    <th></th>
+  </tr>
+  <tr>
+    <td><img src="Screenshots/07-calendar.jpeg" width="220"/></td>
+    <td><img src="Screenshots/08-directions.jpeg" width="220"/></td>
+    <td></td>
+  </tr>
+</table>
 
 ## 🧩 Özellikler
 
